@@ -36,35 +36,21 @@ const Detail = () => {
               <img src="https://imgs.search.brave.com/c0jRiYIhGxNTysIUbPfWl4KG-PfNcy8DLJR12znrTc8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9waG90by1iZWF1/dHktZWxlZ2FudC1i/dXR0ZXJmbHlfMTI1/ODcxNS00MTY3OC5q/cGc_c2l6ZT02MjYm/ZXh0PWpwZw" alt="" />
               <span>photo_2024_2.png</span>
             </div>
-            <img src="./download.png" alt="" /> 
+            <img src="./download.png" alt="" className="icon"/> 
            </div> 
            <div className="photoItem">
             <div className="photoDetail">
               <img src="https://imgs.search.brave.com/c0jRiYIhGxNTysIUbPfWl4KG-PfNcy8DLJR12znrTc8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9waG90by1iZWF1/dHktZWxlZ2FudC1i/dXR0ZXJmbHlfMTI1/ODcxNS00MTY3OC5q/cGc_c2l6ZT02MjYm/ZXh0PWpwZw" alt="" />
               <span>photo_2024_2.png</span>
             </div>
-            <img src="./download.png" alt="" /> 
+            <img src="./download.png" alt="" className="icon"/> 
            </div> 
            <div className="photoItem">
             <div className="photoDetail">
               <img src="https://imgs.search.brave.com/c0jRiYIhGxNTysIUbPfWl4KG-PfNcy8DLJR12znrTc8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9waG90by1iZWF1/dHktZWxlZ2FudC1i/dXR0ZXJmbHlfMTI1/ODcxNS00MTY3OC5q/cGc_c2l6ZT02MjYm/ZXh0PWpwZw" alt="" />
               <span>photo_2024_2.png</span>
             </div>
-            <img src="./download.png" alt="" /> 
-           </div> 
-           <div className="photoItem">
-            <div className="photoDetail">
-              <img src="https://imgs.search.brave.com/c0jRiYIhGxNTysIUbPfWl4KG-PfNcy8DLJR12znrTc8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9waG90by1iZWF1/dHktZWxlZ2FudC1i/dXR0ZXJmbHlfMTI1/ODcxNS00MTY3OC5q/cGc_c2l6ZT02MjYm/ZXh0PWpwZw" alt="" />
-              <span>photo_2024_2.png</span>
-            </div>
-            <img src="./download.png" alt="" /> 
-           </div> 
-           <div className="photoItem">
-            <div className="photoDetail">
-              <img src="https://imgs.search.brave.com/c0jRiYIhGxNTysIUbPfWl4KG-PfNcy8DLJR12znrTc8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9waG90by1iZWF1/dHktZWxlZ2FudC1i/dXR0ZXJmbHlfMTI1/ODcxNS00MTY3OC5q/cGc_c2l6ZT02MjYm/ZXh0PWpwZw" alt="" />
-              <span>photo_2024_2.png</span>
-            </div>
-            <img src="./download.png" alt="" /> 
+            <img src="./download.png" alt="" className="icon"/> 
            </div> 
 
         </div>
@@ -77,6 +63,7 @@ const Detail = () => {
         </div>
         </div>
         <button>Block User</button>
+        <button className="logout">Logout</button>
       </div>
       </div>
   )
