@@ -1,9 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./chatList.css"
 import Adduser from './adduser/Adduser';
+import { useUserStore } from '../../../lib/userStore';
+import { doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { db } from '../../../lib/firebase';
 
 const ChatList = () => {
+  const [chats, setChats] = useState([]);
   const [addMode, setAddMode] = useState(false);
+
+  const {currentUser} = useUserStore();
+
+  useEffect(()=>{
+    const unSub = onSnapshot(doc(db,"userchats",currentUser.id),async (res)=>{
+    const items = res.data().chats;
+    
+    const promises = items.map(async (item)=>{
+        const userDocRef = doc(db, "users", item.receiverId);
+        const userDocSnap = await getDoc(userDocRef);
+
+        const user = userDocSnap.data();
+
+        return {...item, user};
+
+    });
+
+    const chatData = await Promise.all(promises)    
+
+    setChats(chatData.sort((a,b) => b.updatedAt - a.updatedAt));
+
+    });
+
+    return ()=>{
+        unSub();
+    };
+  },[currentUser.id]);
+
   return (
     <div className='chatList'>
         <div className="search">
@@ -19,35 +51,17 @@ const ChatList = () => {
            
             />
         </div>
-        <div className="item">
-            <img src="./mohit.jpg" alt="" />
-            <div className="texts">
-                <span>Batku Bhaiya</span>
-                <p>Love you Baby!!</p>
-            </div>
-        </div>
-        <div className="item">
-            <img src="./gaurav.png" alt="" />
-            <div className="texts">
-                <span>Bordia</span>
-                <p>Annu Ki Mummy Kaisi ho ??</p>
-            </div>
-        </div>
-        <div className="item">
-            <img src="./avatar.png" alt="" />
-            <div className="texts">
-                <span>Shore Bhai</span>
-                <p>Chai peene Chloge??</p>
-            </div>
-        </div>
-        
-        <div className="item">
-            <img src="./avatar.png" alt="" />
-            <div className="texts">
-                <span>Raj Bhai</span>
-                <p>Khn ho bhai ??</p>
-            </div>
-        </div>
+
+        {chats.map((chat) => (
+             <div className="item" key={chats.chatId}>
+             <img src="./mohit.jpg" alt="" />
+             <div className="texts">
+                 <span>Batku Bhaiya</span>
+                 <p>{chats.lastMessage}</p>
+             </div>
+         </div>
+        ))}
+       
      {addMode && <Adduser />}
     </div>
   )

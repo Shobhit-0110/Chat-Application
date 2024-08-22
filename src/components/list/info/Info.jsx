@@ -1,11 +1,14 @@
+import { useUserStore } from "../../../lib/userStore";
 import "./info.css";
 
 const Info = () => {
+
+  const{currentUser} = useUserStore();
   return (
     <div className='userInfo'>
         <div className="user">
-            <img src="./shobhit.jpg" alt="" />
-            <h2>Shobhit</h2>
+            <img src = {currentUser.avatar || "./avatar.jpg"} alt="" />
+            <h2>{currentUser.username}</h2>
         </div>
         <div className="icons">
         <img src="./more.png" alt="" />
