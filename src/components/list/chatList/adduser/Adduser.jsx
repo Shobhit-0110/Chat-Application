@@ -1,13 +1,15 @@
-import { collection, query, where, getDocs } from "firebase/firestore";  // Ensure you import `query` and `where`
+import { collection, query, where, getDocs, setDoc, serverTimestamp, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../../../lib/firebase";
 import "./adduser.css";
 import { useState } from "react";
+import { useUserStore } from "../../../../lib/userStore";
 
 const Adduser = () => {
   const [user, setUser] = useState(null);
+  const { currentUser } = useUserStore();
 
   const handleSearch = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     const formData = new FormData(e.target);
     const username = formData.get("username");
@@ -15,18 +17,57 @@ const Adduser = () => {
     try {
       const userRef = collection(db, "users");
 
-
       const q = query(userRef, where("username", "==", username));
 
- 
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
-      
         setUser(querySnapshot.docs[0].data());
       } else {
-        setUser(null); 
+        setUser(null);
+        console.log("User not found.");
       }
+    } catch (err) {
+      console.log("Error during user search:", err);
+    }
+  };
+
+  const handleAdd = async () => {
+    if (!user || !currentUser) {
+      console.log("User or Current User is not defined.");
+      return;
+    }
+
+    const chatRef = collection(db, "chats");
+    const userChatsRef = collection(db,"userchats")
+
+    try {
+   
+      const newChatRef = doc(chatRef);
+
+      await setDoc(newChatRef, {
+        createdAt: serverTimestamp(),
+        messages: [],
+      });
+
+      await updateDoc( doc(userChatsRef, user.id), {
+          chats: arrayUnion({
+          chatId: newChatRef.id,
+          lastMessage: "",
+          receiverId: currentUser.id,
+          updatedAt: Date.now(),
+        }),
+      });
+
+      await updateDoc( doc(userChatsRef, currentUser.id), {
+        chats: arrayUnion({
+        chatId: newChatRef.id,
+        lastMessage: "",
+        receiverId: user.id,
+        updatedAt: Date.now(),
+      }),
+    });
+
     } catch (err) {
       console.log(err);
     }
@@ -44,7 +85,7 @@ const Adduser = () => {
             <img src={user.avatar || "./avatar.png"} alt="" />
             <span>{user.username}</span>
           </div>
-          <button>Add User</button>
+          <button onClick={handleAdd}>Add User</button>
         </div>
       )}
     </div>
